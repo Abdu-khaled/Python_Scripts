@@ -17,5 +17,5 @@ while i<5:
 value.sort()
 print(value)
 value.sort(reverse=True)
-print(value)
+print(value);
 
