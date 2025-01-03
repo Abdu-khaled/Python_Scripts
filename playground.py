@@ -128,23 +128,79 @@
 #  - If the user enters anything other than a number, detect their mistake, print an error message and skip to the next number.
 
 
-def calculate():
-    total = 0
-    count = 0
+# def calculate():
+#     total = 0
+#     count = 0
 
-    while True:
-        try:
-            user_input = input("Enter a number:")
-            if user_input == "done":
-                break
-            else:
-                total += int(user_input)
-                count += 1
-        except:
-            print("Invalid input")
+#     while True:
+#         try:
+#             user_input = input("Enter a number:")
+#             if user_input == "done":
+#                 break
+#             else:
+#                 total += int(user_input)
+#                 count += 1
+#         except:
+#             print("Invalid input")
+#             continue
+
+
+#     print(f"Total: {total} \n Count: {count} \n Average: {total/count}")
+
+# calculate()
+
+
+
+
+
+import random
+
+# List of words for the game
+words = ["python", "programming", "hangman", "challenge", "code", "developer"]
+
+def choose_word():
+    """Selects a random word from the list."""
+    return random.choice(words)
+
+def display_word(word, guessed_letters):
+    """Displays the current state of the word being guessed."""
+    return " ".join([letter if letter in guessed_letters else "_" for letter in word])
+
+def play_hangman():
+    print("Welcome to Hangman!")
+    word_to_guess = choose_word()
+    guessed_letters = set()
+    attempts_left = 6
+
+    while attempts_left > 0:
+        print("\n" + display_word(word_to_guess, guessed_letters))
+        print(f"Attempts left: {attempts_left}")
+        print(f"Guessed letters: {', '.join(sorted(guessed_letters))}")
+
+        guess = input("Guess a letter: ").lower()
+
+        if len(guess) != 1 or not guess.isalpha():
+            print("Please enter a single valid letter.")
             continue
 
+        if guess in guessed_letters:
+            print("You already guessed that letter!")
+            continue
 
-    print(f"Total: {total} \n Count: {count} \n Average: {total/count}")
+        guessed_letters.add(guess)
 
-calculate()
+        if guess in word_to_guess:
+            print("Good job! You guessed a correct letter.")
+        else:
+            print("Oops! That letter is not in the word.")
+            attempts_left -= 1
+
+        if all(letter in guessed_letters for letter in word_to_guess):
+            print("\nCongratulations! You guessed the word:", word_to_guess)
+            break
+    else:
+        print("\nGame over! The word was:", word_to_guess)
+
+# Run the game
+if __name__ == "__main__":
+    play_hangman()
